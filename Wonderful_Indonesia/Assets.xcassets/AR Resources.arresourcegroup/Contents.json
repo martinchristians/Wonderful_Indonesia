@@ -1,0 +1,26 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "resources" : [
+    {
+      "filename" : "Indonesian Ancestors.arreferenceimage"
+    },
+    {
+      "filename" : "Map of Indonesia Left.arreferenceimage"
+    },
+    {
+      "filename" : "Map of Indonesia Right.arreferenceimage"
+    },
+    {
+      "filename" : "Proclamation Leaders.arreferenceimage"
+    },
+    {
+      "filename" : "Proclamation.arreferenceimage"
+    },
+    {
+      "filename" : "Tikus Temple.arreferenceimage"
+    }
+  ]
+}
