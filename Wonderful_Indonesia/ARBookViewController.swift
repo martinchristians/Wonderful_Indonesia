@@ -28,10 +28,14 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        if anchor is ARImageAnchor {
+        if let imageAnchor = anchor as? ARImageAnchor {
             DispatchQueue.main.async {
                 self.planeDetection.isHidden = false
-                self.planeDetection.text = "Object found!"
+                
+                if let name = imageAnchor.referenceImage.name {
+                    self.planeDetection.text = name
+                }
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                     self.planeDetection.isHidden = true
                 }
