@@ -30,6 +30,25 @@ class HomeScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        navItem()
+    }
+    
+    private func navItem() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "info.circle.fill"),
+            style: .done,
+            target: self,
+            action: #selector(imprintStoryBoard))
+    }
+    
+    @objc func imprintStoryBoard() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        guard let imprintViewController = mainStoryboard.instantiateViewController(withIdentifier: "ImprintViewController") as? ImprintViewController else {
+            print("View Controller not found")
+            return
+        }
+        
+        navigationController?.pushViewController(imprintViewController, animated: true)
     }
 }

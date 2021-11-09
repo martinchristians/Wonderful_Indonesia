@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		37625379273AA44E008D2101 /* ARRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625378273AA44E008D2101 /* ARRoomViewController.swift */; };
 		3762537B273AA50B008D2101 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3762537A273AA50B008D2101 /* HomeScreenViewController.swift */; };
+		3762537F273AC8BD008D2101 /* ImprintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3762537E273AC8BD008D2101 /* ImprintViewController.swift */; };
 		37A9F2B927172E1800DBF1BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A9F2B827172E1800DBF1BC /* AppDelegate.swift */; };
 		37A9F2BB27172E1800DBF1BC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A9F2BA27172E1800DBF1BC /* SceneDelegate.swift */; };
 		37A9F2BD27172E1800DBF1BC /* ARBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A9F2BC27172E1800DBF1BC /* ARBookViewController.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		37625378273AA44E008D2101 /* ARRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRoomViewController.swift; sourceTree = "<group>"; };
 		3762537A273AA50B008D2101 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
+		3762537E273AC8BD008D2101 /* ImprintViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImprintViewController.swift; sourceTree = "<group>"; };
 		37A9F2B527172E1800DBF1BC /* Wonderful_Indonesia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wonderful_Indonesia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37A9F2B827172E1800DBF1BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37A9F2BA27172E1800DBF1BC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				37A9F2B827172E1800DBF1BC /* AppDelegate.swift */,
 				37A9F2BA27172E1800DBF1BC /* SceneDelegate.swift */,
 				3762537A273AA50B008D2101 /* HomeScreenViewController.swift */,
+				3762537E273AC8BD008D2101 /* ImprintViewController.swift */,
 				37A9F2BC27172E1800DBF1BC /* ARBookViewController.swift */,
 				37625378273AA44E008D2101 /* ARRoomViewController.swift */,
 				37A9F2BE27172E1800DBF1BC /* Main.storyboard */,
@@ -268,6 +271,7 @@
 				3762537B273AA50B008D2101 /* HomeScreenViewController.swift in Sources */,
 				37A9F2BD27172E1800DBF1BC /* ARBookViewController.swift in Sources */,
 				37A9F2B927172E1800DBF1BC /* AppDelegate.swift in Sources */,
+				3762537F273AC8BD008D2101 /* ImprintViewController.swift in Sources */,
 				37A9F2BB27172E1800DBF1BC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
