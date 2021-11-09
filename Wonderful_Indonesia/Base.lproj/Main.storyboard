@@ -126,14 +126,37 @@
                     <view key="view" contentMode="scaleToFill" id="jbQ-1d-Y73">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WXs-x6-CL8">
+                                <rect key="frame" x="0.0" y="138" width="414" height="724"/>
+                            </arscnView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="idN-9n-xIy">
+                                <rect key="frame" x="177.5" y="98" width="59" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="p0C-T7-Jq5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WXs-x6-CL8" firstAttribute="top" secondItem="p0C-T7-Jq5" secondAttribute="top" constant="50" id="9kK-FH-uPQ"/>
+                            <constraint firstItem="WXs-x6-CL8" firstAttribute="trailing" secondItem="p0C-T7-Jq5" secondAttribute="trailing" id="KKx-5r-qMS"/>
+                            <constraint firstItem="idN-9n-xIy" firstAttribute="centerX" secondItem="jbQ-1d-Y73" secondAttribute="centerX" id="QQc-4v-dpF"/>
+                            <constraint firstItem="idN-9n-xIy" firstAttribute="top" secondItem="p0C-T7-Jq5" secondAttribute="top" constant="10" id="SoB-fi-2Oy"/>
+                            <constraint firstItem="WXs-x6-CL8" firstAttribute="leading" secondItem="p0C-T7-Jq5" secondAttribute="leading" id="geG-6D-wtf"/>
+                            <constraint firstItem="WXs-x6-CL8" firstAttribute="bottom" secondItem="p0C-T7-Jq5" secondAttribute="bottom" id="ula-Mo-ZtE"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="AR BOOK" id="7gS-0y-I1N"/>
+                    <connections>
+                        <outlet property="planeDetection" destination="idN-9n-xIy" id="omP-TT-uP9"/>
+                        <outlet property="sceneView" destination="WXs-x6-CL8" id="Nlf-Lw-cZw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AIm-bl-4JW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="475" y="117"/>
+            <point key="canvasLocation" x="473.91304347826093" y="116.51785714285714"/>
         </scene>
         <!--AR ROOM-->
         <scene sceneID="68d-0T-QbP">
@@ -142,8 +165,19 @@
                     <view key="view" contentMode="scaleToFill" id="a3Z-z4-F9B">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ouq-u0-Itc">
+                                <rect key="frame" x="0.0" y="138" width="414" height="624"/>
+                            </arscnView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="8Qw-I3-suQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8Qw-I3-suQ" firstAttribute="bottom" secondItem="Ouq-u0-Itc" secondAttribute="bottom" constant="100" id="0PK-I1-Neu"/>
+                            <constraint firstItem="Ouq-u0-Itc" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="50" id="Kt4-Gs-UaX"/>
+                            <constraint firstItem="8Qw-I3-suQ" firstAttribute="trailing" secondItem="Ouq-u0-Itc" secondAttribute="trailing" id="Tz7-cY-PMH"/>
+                            <constraint firstItem="Ouq-u0-Itc" firstAttribute="leading" secondItem="8Qw-I3-suQ" secondAttribute="leading" id="jbr-dY-N82"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="AR ROOM" id="nx9-LV-nXt"/>
                 </viewController>
