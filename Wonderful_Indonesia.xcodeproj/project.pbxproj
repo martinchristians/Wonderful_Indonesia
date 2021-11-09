@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37625379273AA44E008D2101 /* ARRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625378273AA44E008D2101 /* ARRoomViewController.swift */; };
+		3762537B273AA50B008D2101 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3762537A273AA50B008D2101 /* HomeScreenViewController.swift */; };
 		37A9F2B927172E1800DBF1BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A9F2B827172E1800DBF1BC /* AppDelegate.swift */; };
 		37A9F2BB27172E1800DBF1BC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A9F2BA27172E1800DBF1BC /* SceneDelegate.swift */; };
-		37A9F2BD27172E1800DBF1BC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A9F2BC27172E1800DBF1BC /* ViewController.swift */; };
+		37A9F2BD27172E1800DBF1BC /* ARBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A9F2BC27172E1800DBF1BC /* ARBookViewController.swift */; };
 		37A9F2C027172E1800DBF1BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37A9F2BE27172E1800DBF1BC /* Main.storyboard */; };
 		37A9F2C227172E1900DBF1BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37A9F2C127172E1900DBF1BC /* Assets.xcassets */; };
 		37A9F2C527172E1900DBF1BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37A9F2C327172E1900DBF1BC /* LaunchScreen.storyboard */; };
@@ -36,10 +38,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		37625378273AA44E008D2101 /* ARRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRoomViewController.swift; sourceTree = "<group>"; };
+		3762537A273AA50B008D2101 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
 		37A9F2B527172E1800DBF1BC /* Wonderful_Indonesia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wonderful_Indonesia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37A9F2B827172E1800DBF1BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37A9F2BA27172E1800DBF1BC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		37A9F2BC27172E1800DBF1BC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		37A9F2BC27172E1800DBF1BC /* ARBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARBookViewController.swift; sourceTree = "<group>"; };
 		37A9F2BF27172E1800DBF1BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37A9F2C127172E1900DBF1BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37A9F2C427172E1900DBF1BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -101,7 +105,9 @@
 			children = (
 				37A9F2B827172E1800DBF1BC /* AppDelegate.swift */,
 				37A9F2BA27172E1800DBF1BC /* SceneDelegate.swift */,
-				37A9F2BC27172E1800DBF1BC /* ViewController.swift */,
+				3762537A273AA50B008D2101 /* HomeScreenViewController.swift */,
+				37A9F2BC27172E1800DBF1BC /* ARBookViewController.swift */,
+				37625378273AA44E008D2101 /* ARRoomViewController.swift */,
 				37A9F2BE27172E1800DBF1BC /* Main.storyboard */,
 				37A9F2C127172E1900DBF1BC /* Assets.xcassets */,
 				37A9F2C327172E1900DBF1BC /* LaunchScreen.storyboard */,
@@ -258,7 +264,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37A9F2BD27172E1800DBF1BC /* ViewController.swift in Sources */,
+				37625379273AA44E008D2101 /* ARRoomViewController.swift in Sources */,
+				3762537B273AA50B008D2101 /* HomeScreenViewController.swift in Sources */,
+				37A9F2BD27172E1800DBF1BC /* ARBookViewController.swift in Sources */,
 				37A9F2B927172E1800DBF1BC /* AppDelegate.swift in Sources */,
 				37A9F2BB27172E1800DBF1BC /* SceneDelegate.swift in Sources */,
 			);
