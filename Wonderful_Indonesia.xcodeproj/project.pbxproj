@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37529B09273BEFD00061BD71 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 37529B08273BEFD00061BD71 /* art.scnassets */; };
 		37625379273AA44E008D2101 /* ARRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625378273AA44E008D2101 /* ARRoomViewController.swift */; };
 		3762537B273AA50B008D2101 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3762537A273AA50B008D2101 /* HomeScreenViewController.swift */; };
 		3762537F273AC8BD008D2101 /* ImprintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3762537E273AC8BD008D2101 /* ImprintViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		37529B08273BEFD00061BD71 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		37625378273AA44E008D2101 /* ARRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRoomViewController.swift; sourceTree = "<group>"; };
 		3762537A273AA50B008D2101 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
 		3762537E273AC8BD008D2101 /* ImprintViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImprintViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				37625378273AA44E008D2101 /* ARRoomViewController.swift */,
 				37A9F2BE27172E1800DBF1BC /* Main.storyboard */,
 				37A9F2C127172E1900DBF1BC /* Assets.xcassets */,
+				37529B08273BEFD00061BD71 /* art.scnassets */,
 				37A9F2C327172E1900DBF1BC /* LaunchScreen.storyboard */,
 				37A9F2C627172E1900DBF1BC /* Info.plist */,
 			);
@@ -243,6 +246,7 @@
 				37A9F2C527172E1900DBF1BC /* LaunchScreen.storyboard in Resources */,
 				37A9F2C227172E1900DBF1BC /* Assets.xcassets in Resources */,
 				37A9F2C027172E1800DBF1BC /* Main.storyboard in Resources */,
+				37529B09273BEFD00061BD71 /* art.scnassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
