@@ -10,7 +10,7 @@ import ARKit
 
 class ARBookViewController: UIViewController, ARSCNViewDelegate {
 
-    @IBOutlet weak var planeDetection: UILabel!
+    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
     
     override func viewDidLoad() {
@@ -30,14 +30,27 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         if let imageAnchor = anchor as? ARImageAnchor {
             DispatchQueue.main.async {
-                self.planeDetection.isHidden = false
+                self.label.isHidden = false
                 
                 if let name = imageAnchor.referenceImage.name {
-                    self.planeDetection.text = name
+                    switch name {
+                    case "Tikus Temple":
+                        // replace label with object's name
+                        self.label.text = name
+                        
+                        // display 3D model
+                        guard let sceneTikusTemple = SCNScene(named: "art.scnassets/candi_tikus.scn") else {return}
+                        guard let nodeTikusTemple = sceneTikusTemple.rootNode.childNode(withName: "Tikus Temple Parent", recursively: false) else {return}
+                        nodeTikusTemple.removeFromParentNode()
+                        node.addChildNode(nodeTikusTemple)
+                        nodeTikusTemple.isHidden = false
+                    default:
+                        self.label.text = name
+                    }
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    self.planeDetection.isHidden = true
+                    self.label.isHidden = true
                 }
             }
         } else {

@@ -150,7 +150,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="AR BOOK" id="7gS-0y-I1N"/>
                     <connections>
-                        <outlet property="planeDetection" destination="idN-9n-xIy" id="omP-TT-uP9"/>
+                        <outlet property="label" destination="idN-9n-xIy" id="OOW-CN-Usl"/>
                         <outlet property="sceneView" destination="WXs-x6-CL8" id="Nlf-Lw-cZw"/>
                     </connections>
                 </viewController>
