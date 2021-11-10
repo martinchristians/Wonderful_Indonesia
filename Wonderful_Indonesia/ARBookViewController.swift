@@ -19,12 +19,6 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         
         // set the view's delegate
         sceneView.delegate = self
-        
-        // create a new scene
-        let scene = SCNScene()
-        
-        // Set the scene to the view
-        sceneView.scene = scene
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
