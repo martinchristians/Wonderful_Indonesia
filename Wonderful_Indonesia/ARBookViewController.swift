@@ -13,6 +13,9 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
     
+    private var currentAngleY: Float = 0.0
+    private var newAngleY: Float = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR BOOK"
@@ -29,6 +32,9 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinched))
         self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panned))
+        self.sceneView.addGestureRecognizer(panGestureRecognizer)
     }
     
     @objc func tapped(recognizer :UITapGestureRecognizer) {
@@ -62,6 +68,28 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
             } else {
                 print("no object found")
             }
+        }
+    }
+    
+    @objc func panned(recognizer: UIPanGestureRecognizer) {
+        if recognizer.state == .changed {
+            guard let sceneView = recognizer.view as? ARSCNView else {return}
+            
+            let touchCoordinates = recognizer.location(in: sceneView)
+            let translation = recognizer.translation(in: sceneView)
+            
+            let hitTestResults = sceneView.hitTest(touchCoordinates)
+            
+            if let hitTest = hitTestResults.first {
+                let node = hitTest.node.parent!
+                self.newAngleY = Float(translation.x) * Float(Double.pi / 180)
+                self.newAngleY += self.currentAngleY
+                node.eulerAngles.y = self.newAngleY
+            } else {
+                print("no object found")
+            }
+        } else if recognizer.state == .ended {
+            self.currentAngleY = self.newAngleY
         }
     }
     
