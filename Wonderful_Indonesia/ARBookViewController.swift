@@ -8,11 +8,14 @@
 import UIKit
 import ARKit
 
+private var countTapped: Int = 0
+
 class ARBookViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
     
+    private var currentCase: String = ""
     private var currentAngleY: Float = 0.0
     private var newAngleY: Float = 0.0
     
@@ -38,6 +41,9 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @objc func tapped(recognizer :UITapGestureRecognizer) {
+        countTapped += 1
+        if countTapped > 2 {countTapped = 0}
+        
         guard let sceneView = recognizer.view as? ARSCNView else {return}
         
         let touchCoordinates = recognizer.location(in: sceneView)
@@ -47,6 +53,13 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         if let hitTest = hitTestResults.first {
             let node = hitTest.node
             print(node.name ?? "unknown")
+            
+            switch currentCase {
+            case "Proclamation Leaders":
+                node.geometry?.firstMaterial?.diffuse.contents = UIImage.leader()
+            default:
+                break
+            }
         } else {
             print("no object found")
         }
@@ -99,6 +112,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                 self.label.isHidden = false
                 
                 if let name = imageAnchor.referenceImage.name {
+                    self.currentCase = name
                     switch name {
                     case "Tikus Temple":
                         // replace label with object's name
@@ -133,11 +147,13 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         
                         // display image
                         guard let imageLeader = nodeLeadersContainer.childNode(withName: "panel", recursively: false) else {return}
-                        imageLeader.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/images/Ir. Sukarno")
+                        imageLeader.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/images/Ir. Sukarno.png")
                         
                         // display name text
+                        /*
                         guard let nameLeader = nodeLeadersContainer.childNode(withName: "name", recursively: false) else {return}
                         nameLeader.isHidden = false
+                        */
                     default:
                         self.label.text = name
                     }
@@ -166,3 +182,18 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
 
 }
 
+extension UIImage {
+    static func leader() -> UIImage {
+        var imageLeader = UIImage()
+        
+        if countTapped == 1 {
+            imageLeader = UIImage(named: "art.scnassets/images/Moh. Hatta.jpg")!
+        } else if countTapped == 2 {
+            imageLeader = UIImage(named: "art.scnassets/images/Ahmad Subarjo.jpg")!
+        } else {
+            imageLeader = UIImage(named: "art.scnassets/images/Ir. Sukarno.png")!
+        }
+        
+        return imageLeader
+    }
+}
