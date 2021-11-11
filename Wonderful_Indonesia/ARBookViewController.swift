@@ -110,6 +110,16 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         nodeTikusTemple.removeFromParentNode()
                         node.addChildNode(nodeTikusTemple)
                         nodeTikusTemple.isHidden = false
+                    case "Map of Indonesia":
+                        // replace label with object's name
+                        self.label.text = name
+                        
+                        // display image
+                        guard let sceneMap = SCNScene(named: "art.scnassets/map_indonesia.scn") else {return}
+                        guard let nodeMapContainer = sceneMap.rootNode.childNode(withName: "container", recursively: false) else {return}
+                        nodeMapContainer.removeFromParentNode()
+                        node.addChildNode(nodeMapContainer)
+                        nodeMapContainer.isHidden = false
                     default:
                         self.label.text = name
                     }
