@@ -13,6 +13,8 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
     
+    var currentNode = SCNNode()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR BOOK"
@@ -33,12 +35,12 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         
         let touch = recognizer.location(in: sceneView)
         
-        let hitTestResults = sceneView.hitTest(touch, types: .existingPlane)
+        let hitTestResults = sceneView.hitTest(touch)
         
         if hitTestResults.isEmpty {
             print("no object found")
         } else {
-            print("tapped object")
+            print(currentNode.name ?? "unknown")
         }
     }
     
@@ -59,6 +61,8 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         nodeTikusTemple.removeFromParentNode()
                         node.addChildNode(nodeTikusTemple)
                         nodeTikusTemple.isHidden = false
+                        
+                        self.currentNode = nodeTikusTemple
                     default:
                         self.label.text = name
                     }
