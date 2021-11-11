@@ -19,6 +19,27 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         
         // set the view's delegate
         sceneView.delegate = self
+        
+        self.registerGestureRecognizers()
+    }
+    
+    func registerGestureRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func tapped(recognizer :UITapGestureRecognizer) {
+        guard let sceneView = recognizer.view as? ARSCNView else {return}
+        
+        let touch = recognizer.location(in: sceneView)
+        
+        let hitTestResults = sceneView.hitTest(touch, types: .existingPlane)
+        
+        if hitTestResults.isEmpty {
+            print("no object found")
+        } else {
+            print("tapped object")
+        }
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
