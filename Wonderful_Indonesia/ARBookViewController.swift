@@ -120,6 +120,24 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         nodeMapContainer.removeFromParentNode()
                         node.addChildNode(nodeMapContainer)
                         nodeMapContainer.isHidden = false
+                    case "Proclamation Leaders":
+                        // replace label with object's name
+                        self.label.text = name
+                        
+                        // display container
+                        guard let sceneLeaders = SCNScene(named: "art.scnassets/proclamation_leaders.scn") else {return}
+                        guard let nodeLeadersContainer = sceneLeaders.rootNode.childNode(withName: "container", recursively: false) else {return}
+                        nodeLeadersContainer.removeFromParentNode()
+                        node.addChildNode(nodeLeadersContainer)
+                        nodeLeadersContainer.isHidden = false
+                        
+                        // display image
+                        guard let imageLeader = nodeLeadersContainer.childNode(withName: "panel", recursively: false) else {return}
+                        imageLeader.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/images/Ir. Sukarno")
+                        
+                        // display name text
+                        guard let nameLeader = nodeLeadersContainer.childNode(withName: "name", recursively: false) else {return}
+                        nameLeader.isHidden = false
                     default:
                         self.label.text = name
                     }
