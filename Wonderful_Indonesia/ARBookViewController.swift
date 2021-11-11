@@ -26,6 +26,9 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     func registerGestureRecognizers() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+        
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinched))
+        self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
     }
     
     @objc func tapped(recognizer :UITapGestureRecognizer) {
@@ -40,6 +43,25 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
             print(node.name ?? "unknown")
         } else {
             print("no object found")
+        }
+    }
+    
+    @objc func pinched(recognizer: UIPinchGestureRecognizer) {
+        if recognizer.state == .changed {
+            guard let sceneView = recognizer.view as? ARSCNView else {return}
+            
+            let touchCoordinates = recognizer.location(in: sceneView)
+            
+            let hitTestResults = sceneView.hitTest(touchCoordinates)
+            
+            if let hitTest = hitTestResults.first {
+                let node = hitTest.node
+                let pinchAction = SCNAction.scale(by: recognizer.scale, duration: 0)
+                node.runAction(pinchAction)
+                recognizer.scale = 1
+            } else {
+                print("no object found")
+            }
         }
     }
     
