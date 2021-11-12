@@ -154,6 +154,34 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         guard let nameLeader = nodeLeadersContainer.childNode(withName: "name", recursively: false) else {return}
                         nameLeader.isHidden = false
                         */
+                    case "Indonesian Ancestors":
+                        // replace label with object's name
+                        self.label.text = name
+                        
+                        // display container
+                        guard let sceneVideo = SCNScene(named: "art.scnassets/video.scn") else {return}
+                        guard let nodeVideoContainer = sceneVideo.rootNode.childNode(withName: "container", recursively: false) else {return}
+                        nodeVideoContainer.removeFromParentNode()
+                        node.addChildNode(nodeVideoContainer)
+                        nodeVideoContainer.isHidden = false
+                        
+                        // display video
+                        let videoURL = Bundle.main.url(forResource: "art.scnassets/video indonesian ancestors", withExtension: "mov")
+                        let videoPlayer = AVPlayer(url: videoURL!)
+                        
+                        let spriteKitScene = SKScene(size: CGSize(width: 640.0, height: 480.0))
+                        
+                        let nodeVideo = SKVideoNode(avPlayer: videoPlayer)
+                        nodeVideo.position = CGPoint(x: spriteKitScene.size.width/2, y: spriteKitScene.size.height/2)
+                        nodeVideo.size = spriteKitScene.size
+                        nodeVideo.yScale = -1
+                        nodeVideo.play()
+                        
+                        spriteKitScene.addChild(nodeVideo)
+                        
+                        guard let video = nodeVideoContainer.childNode(withName: "panel", recursively: false) else {return}
+                        video.geometry?.firstMaterial?.diffuse.contents = spriteKitScene
+
                     default:
                         self.label.text = name
                     }
