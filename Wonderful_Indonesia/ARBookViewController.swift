@@ -43,6 +43,9 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panned))
         self.sceneView.addGestureRecognizer(panGestureRecognizer)
+        
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
     @objc func tapped(recognizer :UITapGestureRecognizer) {
@@ -116,6 +119,32 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
             }
         } else if recognizer.state == .ended {
             self.currentAngleY = self.newAngleY
+        }
+    }
+    
+    @objc func longPressed(recognizer :UITapGestureRecognizer) {
+        if recognizer.state == .began {
+            guard let sceneView = recognizer.view as? ARSCNView else {return}
+            
+            let touchCoordinates = recognizer.location(in: sceneView)
+            
+            let hitTestResults = sceneView.hitTest(touchCoordinates)
+            
+            if let hitTest = hitTestResults.first {
+                let nodeParent = hitTest.node.parent!
+                let node = hitTest.node
+                if node.name == "Tikus Temple" {
+                    nodeParent.childNode(withName: "panel", recursively: false)?.isHidden = false
+                    node.isHidden = true
+                } else if node.name == "panel"{
+                    nodeParent.childNode(withName: "Tikus Temple", recursively: false)?.isHidden = false
+                    node.isHidden = true
+                }
+            } else {
+                print("no object found")
+            }
+        } else if recognizer.state == .ended {
+            print("ended")
         }
     }
     
