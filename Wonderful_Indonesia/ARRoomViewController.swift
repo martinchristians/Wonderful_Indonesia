@@ -31,8 +31,29 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate {
         
         // set the view's delegate
         sceneView.delegate = self
+        
+        self.registerGestureRecognizers()
+    }
+    
+    func registerGestureRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
 
+    @objc func tapped(recognizer :UITapGestureRecognizer) {
+        guard let sceneView = recognizer.view as? ARSCNView else {return}
+        
+        let touchCoordinates = recognizer.location(in: sceneView)
+        
+        let hitTestResults = sceneView.hitTest(touchCoordinates, types: .existingPlane)
+        
+        if let hitTest = hitTestResults.first {
+            print("surface detected")
+        } else {
+            print("not horizontal surface")
+        }
+    }
+    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         if let planeAnchor = anchor as? ARPlaneAnchor {
             DispatchQueue.main.async {
