@@ -169,17 +169,29 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ouq-u0-Itc">
                                 <rect key="frame" x="0.0" y="138" width="414" height="624"/>
                             </arscnView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xZf-Kc-M9R">
+                                <rect key="frame" x="177.5" y="98" width="59" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8Qw-I3-suQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="8Qw-I3-suQ" firstAttribute="bottom" secondItem="Ouq-u0-Itc" secondAttribute="bottom" constant="100" id="0PK-I1-Neu"/>
+                            <constraint firstItem="xZf-Kc-M9R" firstAttribute="centerX" secondItem="a3Z-z4-F9B" secondAttribute="centerX" id="Ia9-dF-qPd"/>
                             <constraint firstItem="Ouq-u0-Itc" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="50" id="Kt4-Gs-UaX"/>
+                            <constraint firstItem="xZf-Kc-M9R" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="10" id="SWm-0s-TxY"/>
                             <constraint firstItem="8Qw-I3-suQ" firstAttribute="trailing" secondItem="Ouq-u0-Itc" secondAttribute="trailing" id="Tz7-cY-PMH"/>
                             <constraint firstItem="Ouq-u0-Itc" firstAttribute="leading" secondItem="8Qw-I3-suQ" secondAttribute="leading" id="jbr-dY-N82"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="AR ROOM" id="nx9-LV-nXt"/>
+                    <connections>
+                        <outlet property="label" destination="xZf-Kc-M9R" id="ltb-KW-B8e"/>
+                        <outlet property="sceneView" destination="Ouq-u0-Itc" id="3bQ-vV-1mC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XyC-gs-yKO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
