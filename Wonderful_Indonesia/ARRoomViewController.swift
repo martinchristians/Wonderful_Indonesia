@@ -13,9 +13,14 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
     
+    private var hud :MBProgressHUD!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR ROOM"
+        
+        self.hud = MBProgressHUD.showAdded(to: self.sceneView, animated: true)
+        self.hud.label.text = "Detecting plane..."
         
         // debugging
         self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
@@ -28,6 +33,17 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
     }
 
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        if let planeAnchor = anchor as? ARPlaneAnchor {
+            DispatchQueue.main.async {
+                self.hud.label.text = "Plane detected!"
+                self.hud.hide(animated: true, afterDelay: 1)
+            }
+        } else {
+            return
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
