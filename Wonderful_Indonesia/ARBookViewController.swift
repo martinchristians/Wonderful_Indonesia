@@ -19,6 +19,11 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     private var currentAngleY: Float = 0.0
     private var newAngleY: Float = 0.0
     
+    private var audioPlayer: AVAudioPlayer?
+    
+    private var iconPlay = UIImage(named: "art.scnassets/images/play.png")
+    private var iconWave = UIImage(named: "art.scnassets/images/wave.png")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR BOOK"
@@ -57,6 +62,14 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
             switch currentCase {
             case "Proclamation Leaders":
                 node.geometry?.firstMaterial?.diffuse.contents = UIImage.leader()
+            case "Proclamation":
+                if let audioPlayer = audioPlayer, audioPlayer.isPlaying {
+                    node.geometry?.firstMaterial?.diffuse.contents = iconPlay
+                    audioPlayer.stop()
+                } else {
+                    node.geometry?.firstMaterial?.diffuse.contents = iconWave
+                    audioPlayer?.play()
+                }
             default:
                 break
             }
@@ -181,7 +194,37 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         
                         guard let video = nodeVideoContainer.childNode(withName: "panel", recursively: false) else {return}
                         video.geometry?.firstMaterial?.diffuse.contents = spriteKitScene
-
+                    case "Proclamation":
+                        // replace label with object's name
+                        self.label.text = name
+                        
+                        // display container
+                        guard let sceneAudio = SCNScene(named: "art.scnassets/audio.scn") else {return}
+                        guard let nodeAudioContainer = sceneAudio.rootNode.childNode(withName: "container", recursively: false) else {return}
+                        nodeAudioContainer.removeFromParentNode()
+                        node.addChildNode(nodeAudioContainer)
+                        nodeAudioContainer.isHidden = false
+                        
+                        // display icon
+                        guard let imageIcon = nodeAudioContainer.childNode(withName: "panel", recursively: false) else {return}
+                        imageIcon.geometry?.firstMaterial?.diffuse.contents = self.iconPlay
+                        
+                        // play audio
+                        let audioURL = Bundle.main.path(forResource: "art.scnassets/audio proclamation", ofType: "mp3")
+                        do {
+                            try AVAudioSession.sharedInstance().setMode(.default)
+                            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+                            
+                            guard let audioURL = audioURL else {return}
+                            
+                            self.audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioURL))
+                            
+                            guard let audioPlayer = self.audioPlayer else {return}
+                            
+                            audioPlayer.stop()
+                        } catch {
+                            print(error)
+                        }
                     default:
                         self.label.text = name
                     }
