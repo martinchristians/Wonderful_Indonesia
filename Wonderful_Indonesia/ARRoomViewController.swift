@@ -11,13 +11,16 @@ import ARKit
 class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var contentCollectionView: UICollectionView!
     
     private var hud :MBProgressHUD!
     
+    var currentNode: SCNNode?
     var contentsArray = ["Cetho Temple", "Jabung Temple", "Tikus Temple", "Room Portal"]
-    var contentSelected: String?
+    var cell: UICollectionViewCell?
+    var contentSelected: String? = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +47,8 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     }
     
     func registerGestureRecognizers() {
+        deleteButton.addTarget(self, action: #selector(deleteContent), for: .touchUpInside)
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -53,10 +58,32 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         
         let touchCoordinates = recognizer.location(in: sceneView)
         
-        let hitTestResults = sceneView.hitTest(touchCoordinates, types: .existingPlane)
+        // hit test horizontal surface
+        let query = sceneView.raycastQuery(from: touchCoordinates, allowing: .estimatedPlane, alignment: .horizontal)!
+        
+        let hitTestResults = sceneView.session.raycast(query)
+        
+        // hit test node
+        let hitTestNodeResults = sceneView.hitTest(touchCoordinates)
         
         if let hitTest = hitTestResults.first {
-            self.addContent(hitTest: hitTest)
+            if contentSelected != "" {
+                self.addContent(rayCast: hitTest)
+            } else if let hitNodeTest = hitTestNodeResults.first {
+                let node = hitNodeTest.node
+                if node.name != nil {
+                    currentNode = node
+                    
+                    DispatchQueue.main.async {
+                        self.label.isHidden = false
+                        self.label.text = node.name
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.label.isHidden = true
+                    }
+                }
+            }
         } else {
             print("not horizontal surface")
         }
@@ -73,17 +100,12 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
+        self.cell = collectionView.cellForItem(at: indexPath)
         self.contentSelected = contentsArray[indexPath.row]
-        cell?.backgroundColor = UIColor.systemYellow
+        self.cell?.backgroundColor = UIColor.systemYellow
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.systemGreen
-    }
-    
-    func addContent(hitTest: ARHitTestResult) {
+    func addContent(rayCast: ARRaycastResult) {
         if let contentSelected = self.contentSelected {
             let scene = SCNScene(named: "art.scnassets/\(contentSelected).scn")
             let node = (scene?.rootNode.childNode(withName: contentSelected, recursively: true))!
@@ -95,16 +117,27 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
                 node.scale = SCNVector3Make(0.003, 0.003, 0.003)
             }
             
-            let transform = hitTest.worldTransform
+            let transform = rayCast.worldTransform
             let thirdColumn = transform.columns.3
             node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)
             
             self.sceneView.scene.rootNode.addChildNode(node)
+            
+            // reset UICollectionView
+            self.contentSelected = ""
+            self.cell?.backgroundColor = UIColor.systemGreen
+        }
+    }
+    
+    @objc func deleteContent() {
+        if currentNode != nil {
+            currentNode?.removeFromParentNode()
+            currentNode = nil
         }
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        if let planeAnchor = anchor as? ARPlaneAnchor {
+        if anchor is ARPlaneAnchor {
             DispatchQueue.main.async {
                 self.hud.label.text = "Plane detected!"
                 self.hud.hide(animated: true, afterDelay: 1)
