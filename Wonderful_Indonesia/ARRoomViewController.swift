@@ -8,12 +8,15 @@
 import UIKit
 import ARKit
 
-class ARRoomViewController: UIViewController, ARSCNViewDelegate {
+class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet weak var contentCollectionView: UICollectionView!
     
     private var hud :MBProgressHUD!
+    
+    var contentsArray = ["Cetho Temple", "Jabung Temple", "Tikus Temple", "Room Portal"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +34,9 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate {
         
         // set the view's delegate
         sceneView.delegate = self
+        
+        // set the collection view
+        self.contentCollectionView.dataSource = self
         
         self.registerGestureRecognizers()
     }
@@ -52,6 +58,16 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate {
         } else {
             print("not horizontal surface")
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return contentsArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "content", for: indexPath) as! ContentCell
+        cell.contentLabel.text = self.contentsArray[indexPath.row]
+        return cell
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
