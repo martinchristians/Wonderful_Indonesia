@@ -22,6 +22,9 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     var cell: UICollectionViewCell?
     var contentSelected: String? = ""
     
+    private var currentAngleY: Float = 0.0
+    private var newAngleY: Float = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR ROOM"
@@ -51,6 +54,12 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+        
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinched))
+        self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panned))
+        self.sceneView.addGestureRecognizer(panGestureRecognizer)
     }
 
     @objc func tapped(recognizer :UITapGestureRecognizer) {
@@ -89,6 +98,47 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         }
     }
     
+    @objc func pinched(recognizer: UIPinchGestureRecognizer) {
+        if recognizer.state == .changed {
+            guard let sceneView = recognizer.view as? ARSCNView else {return}
+            
+            let touchCoordinates = recognizer.location(in: sceneView)
+            
+            let hitTestResults = sceneView.hitTest(touchCoordinates)
+            
+            if let hitTest = hitTestResults.first {
+                let node = hitTest.node
+                let pinchAction = SCNAction.scale(by: recognizer.scale, duration: 0)
+                node.runAction(pinchAction)
+                recognizer.scale = 1
+            } else {
+                print("no object found")
+            }
+        }
+    }
+    
+    @objc func panned(recognizer: UIPanGestureRecognizer) {
+        if recognizer.state == .changed {
+            guard let sceneView = recognizer.view as? ARSCNView else {return}
+            
+            let touchCoordinates = recognizer.location(in: sceneView)
+            let translation = recognizer.translation(in: sceneView)
+            
+            let hitTestResults = sceneView.hitTest(touchCoordinates)
+            
+            if let hitTest = hitTestResults.first {
+                let node = hitTest.node.parent!
+                self.newAngleY = Float(translation.x) * Float(Double.pi / 180)
+                self.newAngleY += self.currentAngleY
+                node.eulerAngles.y = self.newAngleY
+            } else {
+                print("no object found")
+            }
+        } else if recognizer.state == .ended {
+            self.currentAngleY = self.newAngleY
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return contentsArray.count
     }
@@ -108,14 +158,16 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     func addContent(rayCast: ARRaycastResult) {
         if let contentSelected = self.contentSelected {
             let scene = SCNScene(named: "art.scnassets/\(contentSelected).scn")
-            let node = (scene?.rootNode.childNode(withName: contentSelected, recursively: true))!
-            if (node.name == "Cetho Temple") {
+            let parentName: String = contentSelected + " Parent"
+            let node = (scene?.rootNode.childNode(withName: parentName, recursively: false))!
+            if (node.name == "Cetho Temple Parent") {
                 node.scale = SCNVector3Make(0.01, 0.01, 0.01)
-            } else if (node.name == "Jabung Temple") {
-                node.scale = SCNVector3Make(0.006, 0.006, 0.006)
-            } else if (node.name == "Tikus Temple") {
+            } else if (node.name == "Jabung Temple Parent") {
+                node.scale = SCNVector3Make(0.008, 0.008, 0.008)
+            } else if (node.name == "Tikus Temple Parent") {
                 node.scale = SCNVector3Make(0.003, 0.003, 0.003)
             }
+            node.removeFromParentNode()
             
             let transform = rayCast.worldTransform
             let thirdColumn = transform.columns.3
