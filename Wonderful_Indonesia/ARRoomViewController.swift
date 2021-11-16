@@ -17,6 +17,7 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     private var hud :MBProgressHUD!
     
     var contentsArray = ["Cetho Temple", "Jabung Temple", "Tikus Temple", "Room Portal"]
+    var contentSelected: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +56,7 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         let hitTestResults = sceneView.hitTest(touchCoordinates, types: .existingPlane)
         
         if let hitTest = hitTestResults.first {
-            print("surface detected")
+            self.addContent(hitTest: hitTest)
         } else {
             print("not horizontal surface")
         }
@@ -73,12 +74,33 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
+        self.contentSelected = contentsArray[indexPath.row]
         cell?.backgroundColor = UIColor.systemYellow
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.backgroundColor = UIColor.systemGreen
+    }
+    
+    func addContent(hitTest: ARHitTestResult) {
+        if let contentSelected = self.contentSelected {
+            let scene = SCNScene(named: "art.scnassets/\(contentSelected).scn")
+            let node = (scene?.rootNode.childNode(withName: contentSelected, recursively: true))!
+            if (node.name == "Cetho Temple") {
+                node.scale = SCNVector3Make(0.01, 0.01, 0.01)
+            } else if (node.name == "Jabung Temple") {
+                node.scale = SCNVector3Make(0.006, 0.006, 0.006)
+            } else if (node.name == "Tikus Temple") {
+                node.scale = SCNVector3Make(0.003, 0.003, 0.003)
+            }
+            
+            let transform = hitTest.worldTransform
+            let thirdColumn = transform.columns.3
+            node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)
+            
+            self.sceneView.scene.rootNode.addChildNode(node)
+        }
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {

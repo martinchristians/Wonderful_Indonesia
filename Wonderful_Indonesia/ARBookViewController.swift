@@ -161,7 +161,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         self.label.text = name
                         
                         // display 3D model
-                        guard let sceneTikusTemple = SCNScene(named: "art.scnassets/candi_tikus.scn") else {return}
+                        guard let sceneTikusTemple = SCNScene(named: "art.scnassets/Tikus Temple.scn") else {return}
                         guard let nodeTikusTemple = sceneTikusTemple.rootNode.childNode(withName: "Tikus Temple Parent", recursively: false) else {return}
                         nodeTikusTemple.removeFromParentNode()
                         node.addChildNode(nodeTikusTemple)
