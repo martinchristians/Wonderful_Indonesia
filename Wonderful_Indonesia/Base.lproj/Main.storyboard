@@ -200,12 +200,12 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.64669150109999995" green="0.87460112570000004" blue="0.43519872430000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
                                                 <constraint firstItem="p2U-yh-AS4" firstAttribute="centerY" secondItem="osg-tI-457" secondAttribute="centerY" id="hZY-X9-WRt"/>
                                                 <constraint firstItem="p2U-yh-AS4" firstAttribute="centerX" secondItem="osg-tI-457" secondAttribute="centerX" id="pGW-c7-mSb"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemGreenColor"/>
                                         <connections>
                                             <outlet property="contentLabel" destination="p2U-yh-AS4" id="dZC-hC-Oyo"/>
                                         </connections>
@@ -245,6 +245,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

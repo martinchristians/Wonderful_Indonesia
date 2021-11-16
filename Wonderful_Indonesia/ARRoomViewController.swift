@@ -8,7 +8,7 @@
 import UIKit
 import ARKit
 
-class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionViewDataSource {
+class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
@@ -37,6 +37,7 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         
         // set the collection view
         self.contentCollectionView.dataSource = self
+        self.contentCollectionView.delegate = self
         
         self.registerGestureRecognizers()
     }
@@ -68,6 +69,16 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "content", for: indexPath) as! ContentCell
         cell.contentLabel.text = self.contentsArray[indexPath.row]
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.systemYellow
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.systemGreen
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
