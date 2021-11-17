@@ -268,11 +268,7 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let configuration = ARWorldTrackingConfiguration()
-        
-        configuration.planeDetection = .horizontal
-        
-        self.sceneView.session.run(configuration)
+        restoreMap()
     }
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
@@ -302,13 +298,36 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
                                 
                 // save in user defaults
                 let userDefaults = UserDefaults.standard
-                userDefaults.set(data, forKey: "box")
+                userDefaults.set(data, forKey: "wonderful_indonesia")
                 userDefaults.synchronize()
                 
                 self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
                 self.hud.label.text = "Map Saved!"
-                self.hud.hide(animated: true)
+                self.hud.hide(animated: true, afterDelay: 1)
             }
+        }
+    }
+    
+    func restoreMap() {
+        let userDefaults = UserDefaults.standard
+        
+        if let data = userDefaults.data(forKey: "wonderful_indonesia") {
+            if let unarchived = try? NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data),
+               let worldMap = unarchived as? ARWorldMap {
+                let configuration = ARWorldTrackingConfiguration()
+                
+                configuration.initialWorldMap = worldMap
+                
+                configuration.planeDetection = .horizontal
+                
+                self.sceneView.session.run(configuration)
+            }
+        } else {
+            let configuration = ARWorldTrackingConfiguration()
+            
+            configuration.planeDetection = .horizontal
+            
+            self.sceneView.session.run(configuration)
         }
     }
 }
