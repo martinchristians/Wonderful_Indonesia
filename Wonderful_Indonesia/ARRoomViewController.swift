@@ -166,6 +166,15 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
                 node.scale = SCNVector3Make(0.008, 0.008, 0.008)
             } else if (node.name == "Tikus Temple Parent") {
                 node.scale = SCNVector3Make(0.003, 0.003, 0.003)
+            } else if (node.name == "Room Portal Parent") {
+                self.changeRenderingOrder(nodeName: "roof", node: node)
+                self.changeRenderingOrder(nodeName: "floor", node: node)
+                self.changeRenderingOrder(nodeName: "backWall", node: node)
+                self.changeRenderingOrder(nodeName: "sideWallA", node: node)
+                self.changeRenderingOrder(nodeName: "sideWallB", node: node)
+                self.changeRenderingOrder(nodeName: "sideDoorA", node: node)
+                self.changeRenderingOrder(nodeName: "sideDoorB", node: node)
+                self.changeRenderingOrder(nodeName: "upperDoor", node: node)
             }
             node.removeFromParentNode()
             
@@ -185,6 +194,16 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         if currentNode != nil {
             currentNode?.removeFromParentNode()
             currentNode = nil
+        }
+    }
+    
+    func changeRenderingOrder(nodeName: String, node: SCNNode) {
+        let child = node.childNode(withName: nodeName, recursively: true)
+        child?.renderingOrder = 200
+        
+        // change transparency for the masks
+        if let mask = child?.childNode(withName: "mask", recursively: false) {
+            mask.geometry?.firstMaterial?.transparency = 0.001
         }
     }
     
