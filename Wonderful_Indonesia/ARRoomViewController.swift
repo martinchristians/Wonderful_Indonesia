@@ -171,6 +171,14 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
             } else if (node.name == "Room Portal Parent") {
                 deleteRoomButton.isHidden = false
                 
+                // change rendering order
+                self.changeRenderingOrder(nodeName: "box cetho", node: node)
+                self.changeRenderingOrder(nodeName: "Cetho Temple", node: node)
+                self.changeRenderingOrder(nodeName: "box jabung", node: node)
+                self.changeRenderingOrder(nodeName: "Jabung Temple", node: node)
+                self.changeRenderingOrder(nodeName: "box tikus", node: node)
+                self.changeRenderingOrder(nodeName: "Tikus Temple", node: node)
+                
                 self.changeRenderingOrder(nodeName: "roof", node: node)
                 self.changeRenderingOrder(nodeName: "floor", node: node)
                 self.changeRenderingOrder(nodeName: "backWall", node: node)
@@ -179,6 +187,11 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
                 self.changeRenderingOrder(nodeName: "sideDoorA", node: node)
                 self.changeRenderingOrder(nodeName: "sideDoorB", node: node)
                 self.changeRenderingOrder(nodeName: "upperDoor", node: node)
+                
+                // rotate animation
+                self.animateNode(nodeName: "Cetho Temple Parent", node: node, scaleSize: 0.006)
+                self.animateNode(nodeName: "Jabung Temple Parent", node: node, scaleSize: 0.002)
+                self.animateNode(nodeName: "Tikus Temple Parent", node: node, scaleSize: 0.002)
             }
             node.removeFromParentNode()
             
@@ -219,6 +232,24 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         if let mask = child?.childNode(withName: "mask", recursively: false) {
             mask.geometry?.firstMaterial?.transparency = 0.001
         }
+    }
+    
+    func animateNode(nodeName: String, node: SCNNode, scaleSize: Float) {
+        guard let child = node.childNode(withName: nodeName, recursively: true) else {return}
+        
+        // rotate animation
+        let rotateAction = SCNAction.rotateBy(x: 0, y: 0.5, z: 0, duration: 3)
+        let runForever = SCNAction.repeatForever(rotateAction)
+        child.runAction(runForever)
+        
+        // scale animation
+        let rescale = CABasicAnimation(keyPath: "transform.scale")
+        rescale.fromValue = child.presentation.scale
+        rescale.toValue = SCNVector3(x: child.presentation.scale.x + scaleSize, y: child.presentation.scale.y + scaleSize, z: child.presentation.scale.z + scaleSize)
+        rescale.duration = 5
+        rescale.autoreverses = true
+        rescale.repeatCount = .infinity
+        child.addAnimation(rescale, forKey: "transform.scale")
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
