@@ -12,6 +12,7 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var deleteRoomButton: UIButton!
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var contentCollectionView: UICollectionView!
     
@@ -51,6 +52,7 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     
     func registerGestureRecognizers() {
         deleteButton.addTarget(self, action: #selector(deleteContent), for: .touchUpInside)
+        deleteRoomButton.addTarget(self, action: #selector(deleteRoomContent), for: .touchUpInside)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
@@ -167,6 +169,8 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
             } else if (node.name == "Tikus Temple Parent") {
                 node.scale = SCNVector3Make(0.003, 0.003, 0.003)
             } else if (node.name == "Room Portal Parent") {
+                deleteRoomButton.isHidden = false
+                
                 self.changeRenderingOrder(nodeName: "roof", node: node)
                 self.changeRenderingOrder(nodeName: "floor", node: node)
                 self.changeRenderingOrder(nodeName: "backWall", node: node)
@@ -194,6 +198,16 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         if currentNode != nil {
             currentNode?.removeFromParentNode()
             currentNode = nil
+        }
+    }
+    
+    @objc func deleteRoomContent() {
+        deleteRoomButton.isHidden = true
+        
+        sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+            if (node.name == "Room Portal Parent") {
+                node.removeFromParentNode()
+            }
         }
     }
     

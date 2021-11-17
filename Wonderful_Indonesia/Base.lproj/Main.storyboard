@@ -168,7 +168,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xZf-Kc-M9R">
-                                <rect key="frame" x="177.5" y="98" width="59" height="30"/>
+                                <rect key="frame" x="177.5" y="133" width="59" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -213,13 +213,37 @@
                                 </cells>
                             </collectionView>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jvg-I1-TPo">
-                                <rect key="frame" x="0.0" y="136" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="171" width="414" height="637"/>
                             </arscnView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BV9-1m-iat">
-                                <rect key="frame" x="339" y="98" width="65" height="31"/>
+                                <rect key="frame" x="347" y="98" width="57" height="28"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="delete"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="delete">
+                                    <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                    <color key="baseForegroundColor" systemColor="systemPinkColor"/>
+                                    <color key="baseBackgroundColor" systemColor="systemPinkColor"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pZ-k9-Qov">
+                                <rect key="frame" x="250" y="98" width="89" height="28"/>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="delete room">
+                                    <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                    <color key="baseBackgroundColor" systemColor="systemPinkColor"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5xQ-2t-RkT">
+                                <rect key="frame" x="10" y="98" width="49" height="28"/>
+                                <color key="tintColor" systemColor="systemGreenColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="save">
+                                    <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                    <color key="baseForegroundColor" systemColor="systemGreenColor"/>
+                                    <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
+                                </buttonConfiguration>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8Qw-I3-suQ"/>
@@ -227,13 +251,17 @@
                         <constraints>
                             <constraint firstItem="KR9-0G-8QD" firstAttribute="leading" secondItem="8Qw-I3-suQ" secondAttribute="leading" id="FwF-gh-EFx"/>
                             <constraint firstItem="KR9-0G-8QD" firstAttribute="top" secondItem="jvg-I1-TPo" secondAttribute="bottom" constant="8" symbolic="YES" id="K6Y-Cr-1lX"/>
+                            <constraint firstItem="BV9-1m-iat" firstAttribute="leading" secondItem="8pZ-k9-Qov" secondAttribute="trailing" constant="8" symbolic="YES" id="M3t-qM-pFc"/>
+                            <constraint firstItem="5xQ-2t-RkT" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="10" id="Q9o-Hc-aJ1"/>
                             <constraint firstItem="BV9-1m-iat" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="10" id="Rcf-qi-LsZ"/>
-                            <constraint firstItem="xZf-Kc-M9R" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="10" id="SKc-ij-TT4"/>
+                            <constraint firstItem="xZf-Kc-M9R" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="45" id="SKc-ij-TT4"/>
                             <constraint firstItem="xZf-Kc-M9R" firstAttribute="centerX" secondItem="a3Z-z4-F9B" secondAttribute="centerX" id="UKe-Gf-Pmz"/>
                             <constraint firstItem="jvg-I1-TPo" firstAttribute="top" secondItem="xZf-Kc-M9R" secondAttribute="bottom" constant="8" symbolic="YES" id="V8s-8B-wLg"/>
                             <constraint firstAttribute="bottom" secondItem="KR9-0G-8QD" secondAttribute="bottom" id="Y0H-x0-Ucg"/>
                             <constraint firstItem="KR9-0G-8QD" firstAttribute="trailing" secondItem="8Qw-I3-suQ" secondAttribute="trailing" id="ZgZ-3L-oXU"/>
                             <constraint firstItem="jvg-I1-TPo" firstAttribute="leading" secondItem="8Qw-I3-suQ" secondAttribute="leading" id="cRf-pe-mnl"/>
+                            <constraint firstItem="5xQ-2t-RkT" firstAttribute="leading" secondItem="8Qw-I3-suQ" secondAttribute="leading" constant="10" id="cTy-JN-cRT"/>
+                            <constraint firstItem="8pZ-k9-Qov" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="10" id="cmo-6b-RYM"/>
                             <constraint firstItem="jvg-I1-TPo" firstAttribute="trailing" secondItem="8Qw-I3-suQ" secondAttribute="trailing" id="kkV-cB-uq2"/>
                             <constraint firstItem="8Qw-I3-suQ" firstAttribute="trailing" secondItem="BV9-1m-iat" secondAttribute="trailing" constant="10" id="rrT-pR-Qz9"/>
                         </constraints>
@@ -242,6 +270,7 @@
                     <connections>
                         <outlet property="contentCollectionView" destination="KR9-0G-8QD" id="sl1-cb-c3f"/>
                         <outlet property="deleteButton" destination="BV9-1m-iat" id="qPk-o2-8I8"/>
+                        <outlet property="deleteRoomButton" destination="8pZ-k9-Qov" id="Pil-hd-aOD"/>
                         <outlet property="label" destination="xZf-Kc-M9R" id="ltb-KW-B8e"/>
                         <outlet property="sceneView" destination="jvg-I1-TPo" id="z48-IA-eBv"/>
                     </connections>
@@ -257,6 +286,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
