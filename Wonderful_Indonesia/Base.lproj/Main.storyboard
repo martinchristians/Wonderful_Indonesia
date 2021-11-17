@@ -244,7 +244,17 @@
                                     <color key="baseForegroundColor" systemColor="systemGreenColor"/>
                                     <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="save:" destination="sRM-59-nBB" eventType="touchUpInside" id="sbR-vD-Z2S"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4W-ZO-5Fq">
+                                <rect key="frame" x="67" y="105" width="30" height="14"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8Qw-I3-suQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -262,6 +272,8 @@
                             <constraint firstItem="jvg-I1-TPo" firstAttribute="leading" secondItem="8Qw-I3-suQ" secondAttribute="leading" id="cRf-pe-mnl"/>
                             <constraint firstItem="5xQ-2t-RkT" firstAttribute="leading" secondItem="8Qw-I3-suQ" secondAttribute="leading" constant="10" id="cTy-JN-cRT"/>
                             <constraint firstItem="8pZ-k9-Qov" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="10" id="cmo-6b-RYM"/>
+                            <constraint firstItem="Q4W-ZO-5Fq" firstAttribute="top" secondItem="8Qw-I3-suQ" secondAttribute="top" constant="17" id="dwb-cV-gMo"/>
+                            <constraint firstItem="Q4W-ZO-5Fq" firstAttribute="leading" secondItem="5xQ-2t-RkT" secondAttribute="trailing" constant="8" symbolic="YES" id="kDk-W4-R22"/>
                             <constraint firstItem="jvg-I1-TPo" firstAttribute="trailing" secondItem="8Qw-I3-suQ" secondAttribute="trailing" id="kkV-cB-uq2"/>
                             <constraint firstItem="8Qw-I3-suQ" firstAttribute="trailing" secondItem="BV9-1m-iat" secondAttribute="trailing" constant="10" id="rrT-pR-Qz9"/>
                         </constraints>
@@ -273,6 +285,7 @@
                         <outlet property="deleteRoomButton" destination="8pZ-k9-Qov" id="Pil-hd-aOD"/>
                         <outlet property="label" destination="xZf-Kc-M9R" id="ltb-KW-B8e"/>
                         <outlet property="sceneView" destination="jvg-I1-TPo" id="z48-IA-eBv"/>
+                        <outlet property="statusLabel" destination="Q4W-ZO-5Fq" id="6DT-dL-TjB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XyC-gs-yKO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -8,9 +8,10 @@
 import UIKit
 import ARKit
 
-class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, ARSessionDelegate {
 
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var deleteRoomButton: UIButton!
     @IBOutlet weak var sceneView: ARSCNView!
@@ -35,13 +36,14 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         
         // debugging
         self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
-        sceneView.showsStatistics = true
+        self.sceneView.showsStatistics = true
         
         // lighting
         self.sceneView.autoenablesDefaultLighting = true
         
         // set the view's delegate
-        sceneView.delegate = self
+        self.sceneView.delegate = self
+        self.sceneView.session.delegate = self
         
         // set the collection view
         self.contentCollectionView.dataSource = self
@@ -188,7 +190,7 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
                 self.changeRenderingOrder(nodeName: "sideDoorB", node: node)
                 self.changeRenderingOrder(nodeName: "upperDoor", node: node)
                 
-                // rotate animation
+                // animation
                 self.animateNode(nodeName: "Cetho Temple Parent", node: node, scaleSize: 0.006)
                 self.animateNode(nodeName: "Jabung Temple Parent", node: node, scaleSize: 0.002)
                 self.animateNode(nodeName: "Tikus Temple Parent", node: node, scaleSize: 0.002)
@@ -271,5 +273,42 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         configuration.planeDetection = .horizontal
         
         self.sceneView.session.run(configuration)
+    }
+    
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        switch frame.worldMappingStatus {
+        case .notAvailable:
+            self.statusLabel.text = "NOT AVAILABE"
+        case .limited:
+            self.statusLabel.text = "LIMITED"
+        case .extending:
+            self.statusLabel.text = "EXTENDING"
+        case .mapped:
+            self.statusLabel.text = "MAPPED"
+        @unknown default:
+            fatalError()
+        }
+    }
+    
+    @IBAction func save(_ sender: Any) {
+        self.sceneView.session.getCurrentWorldMap { worldMap, error in
+            if error != nil {
+                print(error?.localizedDescription as Any)
+                return
+            }
+            
+            if let map = worldMap {
+                let data = try! NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                                
+                // save in user defaults
+                let userDefaults = UserDefaults.standard
+                userDefaults.set(data, forKey: "box")
+                userDefaults.synchronize()
+                
+                self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                self.hud.label.text = "Map Saved!"
+                self.hud.hide(animated: true)
+            }
+        }
     }
 }
