@@ -20,9 +20,11 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     private var hud :MBProgressHUD!
     
     var currentNode: SCNNode?
+    var currentAnchor: ARAnchor?
     var contentsArray = ["Cetho Temple", "Jabung Temple", "Tikus Temple", "Room Portal"]
     var cell: UICollectionViewCell?
-    var contentSelected: String? = ""
+    var contentSelected: String?
+    var finishRestore = false
     
     private var currentAngleY: Float = 0.0
     private var newAngleY: Float = 0.0
@@ -67,6 +69,8 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
     }
 
     @objc func tapped(recognizer :UITapGestureRecognizer) {
+        self.finishRestore = true
+        
         guard let sceneView = recognizer.view as? ARSCNView else {return}
         
         let touchCoordinates = recognizer.location(in: sceneView)
@@ -80,12 +84,16 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         let hitTestNodeResults = sceneView.hitTest(touchCoordinates)
         
         if let hitTest = hitTestResults.first {
-            if contentSelected != "" {
-                self.addContent(rayCast: hitTest)
+            if finishRestore && contentSelected != nil {
+                let nodeAnchor = ARAnchor(transform: hitTest.worldTransform)
+                self.sceneView.session.add(anchor: nodeAnchor)
+                
+                self.cell?.backgroundColor = UIColor.systemGreen
             } else if let hitNodeTest = hitTestNodeResults.first {
                 let node = hitNodeTest.node
                 if node.name != nil {
                     currentNode = node
+                    currentAnchor = sceneView.anchor(for: node)!
                     
                     DispatchQueue.main.async {
                         self.label.isHidden = false
@@ -111,7 +119,7 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
             let hitTestResults = sceneView.hitTest(touchCoordinates)
             
             if let hitTest = hitTestResults.first {
-                let node = hitTest.node
+                let node = hitTest.node.parent!
                 let pinchAction = SCNAction.scale(by: recognizer.scale, duration: 0)
                 node.runAction(pinchAction)
                 recognizer.scale = 1
@@ -159,8 +167,10 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         self.cell?.backgroundColor = UIColor.systemYellow
     }
     
-    func addContent(rayCast: ARRaycastResult) {
-        if let contentSelected = self.contentSelected {
+    func addContent() -> SCNNode {
+        if self.contentSelected != nil {
+            let contentSelected = self.contentSelected!
+            
             let scene = SCNScene(named: "art.scnassets/\(contentSelected).scn")
             let parentName: String = contentSelected + " Parent"
             let node = (scene?.rootNode.childNode(withName: parentName, recursively: false))!
@@ -197,22 +207,25 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
             }
             node.removeFromParentNode()
             
-            let transform = rayCast.worldTransform
-            let thirdColumn = transform.columns.3
-            node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)
-            
-            self.sceneView.scene.rootNode.addChildNode(node)
-            
-            // reset UICollectionView
-            self.contentSelected = ""
-            self.cell?.backgroundColor = UIColor.systemGreen
+            return node
         }
+        return loadContent()
+    }
+    
+    func loadContent() -> SCNNode {
+        let scene = SCNScene(named: "art.scnassets/Tikus Temple.scn")
+        let loadNode = (scene?.rootNode.childNode(withName: "Tikus Temple Parent", recursively: false))
+        
+        return loadNode!
     }
     
     @objc func deleteContent() {
         if currentNode != nil {
             currentNode?.removeFromParentNode()
             currentNode = nil
+
+            sceneView.session.remove(anchor: currentAnchor!)
+            currentAnchor = nil
         }
     }
     
@@ -260,9 +273,11 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
                 self.hud.label.text = "Plane detected!"
                 self.hud.hide(animated: true, afterDelay: 1)
             }
-        } else {
             return
         }
+        
+        node.addChildNode(addContent())
+        self.contentSelected = nil
     }
     
     override func viewWillAppear(_ animated: Bool) {
