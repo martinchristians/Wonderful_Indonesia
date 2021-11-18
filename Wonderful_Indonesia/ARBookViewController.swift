@@ -15,6 +15,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var contentInfoButton: UIButton!
+    @IBOutlet weak var introScreen: UIView!
     
     private var currentCase: String = ""
     private var currentAngleY: Float = 0.0
@@ -28,6 +29,9 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR BOOK"
+        
+        sceneView.alpha = 0.25
+        label.alpha = 0
         
         // set the view's delegate
         sceneView.delegate = self
@@ -282,11 +286,16 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         self.sceneView.session.run(configuration)
     }
 
+    @IBAction func clickUnderstand(_ sender: Any) {
+        self.introScreen.isHidden = true
+        sceneView.alpha = 1
+        label.alpha = 1
+    }
+    
     @IBAction func clickInfo(_ sender: Any) {
         let contentViewController = self.storyboard?.instantiateViewController(withIdentifier: "contentInfo") as! ContentViewController
         contentViewController.content = self.currentCase
         self.navigationController?.showDetailViewController(contentViewController, sender: self)
-//        self.navigationController?.pushViewController(contentViewController, animated: true)
     }
 }
 
