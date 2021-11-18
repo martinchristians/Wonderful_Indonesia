@@ -22,6 +22,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     private var newAngleY: Float = 0.0
     
     private var audioPlayer: AVAudioPlayer?
+    private var videoPlayer = AVPlayer()
     
     private var iconPlay = UIImage(named: "art.scnassets/images/play.png")
     private var iconWave = UIImage(named: "art.scnassets/images/wave.png")
@@ -77,6 +78,14 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                 } else {
                     node.geometry?.firstMaterial?.diffuse.contents = iconWave
                     audioPlayer?.play()
+                }
+            case "Indonesian Ancestors":
+                var videoRate: Float = 0.0
+                if (self.videoPlayer.rate-videoRate) == 0.0 {
+                    self.videoPlayer.play()
+                    videoRate = self.videoPlayer.rate
+                } else {
+                    self.videoPlayer.pause()
                 }
             default:
                 break
@@ -215,15 +224,15 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         
                         // display video
                         let videoURL = Bundle.main.url(forResource: "art.scnassets/video indonesian ancestors", withExtension: "mov")
-                        let videoPlayer = AVPlayer(url: videoURL!)
+                        self.videoPlayer = AVPlayer(url: videoURL!)
                         
                         let spriteKitScene = SKScene(size: CGSize(width: 640.0, height: 480.0))
                         
-                        let nodeVideo = SKVideoNode(avPlayer: videoPlayer)
+                        let nodeVideo = SKVideoNode(avPlayer: self.videoPlayer)
                         nodeVideo.position = CGPoint(x: spriteKitScene.size.width/2, y: spriteKitScene.size.height/2)
                         nodeVideo.size = spriteKitScene.size
                         nodeVideo.yScale = -1
-                        nodeVideo.play()
+                        nodeVideo.pause()
                         
                         spriteKitScene.addChild(nodeVideo)
                         
