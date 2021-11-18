@@ -106,19 +106,31 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Zzx-Vw-nBd">
+                                <rect key="frame" x="20" y="130" width="374" height="732"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yxc-tb-4DN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Zzx-Vw-nBd" firstAttribute="bottom" secondItem="yxc-tb-4DN" secondAttribute="bottom" id="3Bg-t2-6WO"/>
                             <constraint firstItem="LJy-CT-6ZJ" firstAttribute="top" secondItem="yxc-tb-4DN" secondAttribute="top" constant="50" id="Emy-vo-riV"/>
                             <constraint firstItem="LJy-CT-6ZJ" firstAttribute="centerX" secondItem="pV2-be-07e" secondAttribute="centerX" id="Lhj-AJ-ZIP"/>
+                            <constraint firstItem="Zzx-Vw-nBd" firstAttribute="top" secondItem="LJy-CT-6ZJ" secondAttribute="bottom" constant="8" symbolic="YES" id="YLQ-1M-2O6"/>
+                            <constraint firstItem="Zzx-Vw-nBd" firstAttribute="centerX" secondItem="pV2-be-07e" secondAttribute="centerX" id="hz2-7x-NHq"/>
+                            <constraint firstItem="Zzx-Vw-nBd" firstAttribute="leading" secondItem="pV2-be-07e" secondAttribute="leadingMargin" id="kES-yR-Tgu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="B4h-4G-9yy"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nxR-bf-991" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-633" y="-589"/>
+            <point key="canvasLocation" x="-633.33333333333337" y="-589.28571428571422"/>
         </scene>
         <!--AR BOOK-->
         <scene sceneID="pHh-BQ-438">
@@ -137,6 +149,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rs7-aL-kKE">
+                                <rect key="frame" x="360" y="98" width="44" height="31"/>
+                                <color key="tintColor" systemColor="systemGreenColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="info.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="clickInfo:" destination="Nl9-yM-7vX" eventType="touchUpInside" id="zb4-3H-7Yn"/>
+                                    <action selector="info:" destination="iDt-JM-S0R" eventType="touchUpInside" id="ILh-Hj-sxd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="p0C-T7-Jq5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -145,19 +167,67 @@
                             <constraint firstItem="WXs-x6-CL8" firstAttribute="trailing" secondItem="p0C-T7-Jq5" secondAttribute="trailing" id="KKx-5r-qMS"/>
                             <constraint firstItem="idN-9n-xIy" firstAttribute="centerX" secondItem="jbQ-1d-Y73" secondAttribute="centerX" id="QQc-4v-dpF"/>
                             <constraint firstItem="idN-9n-xIy" firstAttribute="top" secondItem="p0C-T7-Jq5" secondAttribute="top" constant="10" id="SoB-fi-2Oy"/>
+                            <constraint firstItem="p0C-T7-Jq5" firstAttribute="trailing" secondItem="rs7-aL-kKE" secondAttribute="trailing" constant="10" id="ZSj-6f-iJf"/>
                             <constraint firstItem="WXs-x6-CL8" firstAttribute="leading" secondItem="p0C-T7-Jq5" secondAttribute="leading" id="geG-6D-wtf"/>
+                            <constraint firstItem="rs7-aL-kKE" firstAttribute="top" secondItem="p0C-T7-Jq5" secondAttribute="top" constant="10" id="tVG-M9-DJZ"/>
                             <constraint firstItem="WXs-x6-CL8" firstAttribute="bottom" secondItem="p0C-T7-Jq5" secondAttribute="bottom" id="ula-Mo-ZtE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="AR BOOK" id="7gS-0y-I1N"/>
                     <connections>
+                        <outlet property="contentInfoButton" destination="rs7-aL-kKE" id="D82-9l-DjX"/>
+                        <outlet property="infoButton" destination="rs7-aL-kKE" id="B2r-r2-aPN"/>
                         <outlet property="label" destination="idN-9n-xIy" id="OOW-CN-Usl"/>
                         <outlet property="sceneView" destination="WXs-x6-CL8" id="Nlf-Lw-cZw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AIm-bl-4JW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="iDt-JM-S0R" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="473.91304347826093" y="116.51785714285714"/>
+        </scene>
+        <!--Content View Controller-->
+        <scene sceneID="aib-4M-Lsn">
+            <objects>
+                <viewController storyboardIdentifier="contentInfo" id="UKo-vn-5Nn" customClass="ContentViewController" customModule="Wonderful_Indonesia" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hRa-c1-nXU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2d-35-vmd">
+                                <rect key="frame" x="177.5" y="69" width="59" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wYf-LL-8Qf">
+                                <rect key="frame" x="20" y="124" width="374" height="738"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pRB-xO-UxX"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wYf-LL-8Qf" firstAttribute="top" secondItem="I2d-35-vmd" secondAttribute="bottom" constant="25" id="0vk-tg-Uld"/>
+                            <constraint firstItem="wYf-LL-8Qf" firstAttribute="leading" secondItem="hRa-c1-nXU" secondAttribute="leadingMargin" id="Am7-ZX-byH"/>
+                            <constraint firstItem="I2d-35-vmd" firstAttribute="top" secondItem="pRB-xO-UxX" secondAttribute="top" constant="25" id="BF9-mn-ZvC"/>
+                            <constraint firstItem="I2d-35-vmd" firstAttribute="centerX" secondItem="hRa-c1-nXU" secondAttribute="centerX" id="MtU-oC-smt"/>
+                            <constraint firstItem="wYf-LL-8Qf" firstAttribute="centerX" secondItem="hRa-c1-nXU" secondAttribute="centerX" id="PLi-aQ-hJQ"/>
+                            <constraint firstItem="pRB-xO-UxX" firstAttribute="bottom" secondItem="wYf-LL-8Qf" secondAttribute="bottom" id="hCE-wV-TUP"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="KO3-mb-Q9m"/>
+                    <connections>
+                        <outlet property="label" destination="I2d-35-vmd" id="FRt-eA-TVU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="heg-7N-c26" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1358" y="117"/>
         </scene>
         <!--AR ROOM-->
         <scene sceneID="68d-0T-QbP">
@@ -294,6 +364,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="info.circle.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

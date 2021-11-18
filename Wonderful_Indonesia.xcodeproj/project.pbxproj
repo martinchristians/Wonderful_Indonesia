@@ -22,6 +22,7 @@
 		37A9F2DC27172E1900DBF1BC /* Wonderful_IndonesiaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A9F2DB27172E1900DBF1BC /* Wonderful_IndonesiaUITestsLaunchTests.swift */; };
 		37C33F2F274301C200A3CF06 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C33F2D274301C200A3CF06 /* MBProgressHUD.m */; };
 		37C33F352743F87800A3CF06 /* ContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C33F342743F87800A3CF06 /* ContentCell.swift */; };
+		37C33F372746B40600A3CF06 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C33F362746B40600A3CF06 /* ContentViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		37C33F2D274301C200A3CF06 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		37C33F2E274301C200A3CF06 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		37C33F342743F87800A3CF06 /* ContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCell.swift; sourceTree = "<group>"; };
+		37C33F362746B40600A3CF06 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				37A9F2BC27172E1800DBF1BC /* ARBookViewController.swift */,
 				37625378273AA44E008D2101 /* ARRoomViewController.swift */,
 				37C33F342743F87800A3CF06 /* ContentCell.swift */,
+				37C33F362746B40600A3CF06 /* ContentViewController.swift */,
 				37A9F2BE27172E1800DBF1BC /* Main.storyboard */,
 				37A9F2C127172E1900DBF1BC /* Assets.xcassets */,
 				37529B08273BEFD00061BD71 /* art.scnassets */,
@@ -286,6 +289,7 @@
 				3762537B273AA50B008D2101 /* HomeScreenViewController.swift in Sources */,
 				37A9F2BD27172E1800DBF1BC /* ARBookViewController.swift in Sources */,
 				37A9F2B927172E1800DBF1BC /* AppDelegate.swift in Sources */,
+				37C33F372746B40600A3CF06 /* ContentViewController.swift in Sources */,
 				3762537F273AC8BD008D2101 /* ImprintViewController.swift in Sources */,
 				37A9F2BB27172E1800DBF1BC /* SceneDelegate.swift in Sources */,
 				37C33F2F274301C200A3CF06 /* MBProgressHUD.m in Sources */,

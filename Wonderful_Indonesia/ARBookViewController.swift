@@ -14,6 +14,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet weak var contentInfoButton: UIButton!
     
     private var currentCase: String = ""
     private var currentAngleY: Float = 0.0
@@ -155,6 +156,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                 
                 if let name = imageAnchor.referenceImage.name {
                     self.currentCase = name
+                    self.contentInfoButton.isHidden = false
                     switch name {
                     case "Tikus Temple":
                         // replace label with object's name
@@ -280,6 +282,12 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         self.sceneView.session.run(configuration)
     }
 
+    @IBAction func clickInfo(_ sender: Any) {
+        let contentViewController = self.storyboard?.instantiateViewController(withIdentifier: "contentInfo") as! ContentViewController
+        contentViewController.content = self.currentCase
+        self.navigationController?.showDetailViewController(contentViewController, sender: self)
+//        self.navigationController?.pushViewController(contentViewController, animated: true)
+    }
 }
 
 extension UIImage {
