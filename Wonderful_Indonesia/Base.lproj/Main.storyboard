@@ -210,16 +210,32 @@
                                     <action selector="clickInfo:" destination="Nl9-yM-7vX" eventType="touchUpInside" id="NJf-Rh-uNv"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fEV-4Y-TnC">
+                                <rect key="frame" x="20" y="98" width="42" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="systemGreenColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="arrow.clockwise" catalog="system">
+                                    <color key="baseForegroundColor" systemColor="systemGreenColor"/>
+                                    <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="clickRefresh:" destination="Nl9-yM-7vX" eventType="touchUpInside" id="KvV-Jg-ZHa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="p0C-T7-Jq5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="p0C-T7-Jq5" firstAttribute="bottom" secondItem="vFi-qG-bDt" secondAttribute="bottom" constant="234" id="6BZ-eu-IlR"/>
                             <constraint firstItem="gzT-Ih-D2I" firstAttribute="bottom" secondItem="idN-9n-xIy" secondAttribute="bottom" id="7Hp-6I-qEY"/>
+                            <constraint firstItem="fEV-4Y-TnC" firstAttribute="top" secondItem="p0C-T7-Jq5" secondAttribute="top" constant="10" id="9Sg-G9-ltd"/>
                             <constraint firstItem="WXs-x6-CL8" firstAttribute="top" secondItem="p0C-T7-Jq5" secondAttribute="top" constant="50" id="9kK-FH-uPQ"/>
                             <constraint firstItem="p0C-T7-Jq5" firstAttribute="trailing" secondItem="gzT-Ih-D2I" secondAttribute="trailing" constant="20" id="CEN-p2-Gik"/>
+                            <constraint firstItem="WXs-x6-CL8" firstAttribute="top" secondItem="fEV-4Y-TnC" secondAttribute="bottom" constant="8" symbolic="YES" id="DNp-Dk-EGU"/>
                             <constraint firstItem="gzT-Ih-D2I" firstAttribute="centerY" secondItem="idN-9n-xIy" secondAttribute="centerY" id="G2O-1K-imL"/>
                             <constraint firstItem="p0C-T7-Jq5" firstAttribute="trailing" secondItem="vFi-qG-bDt" secondAttribute="trailing" constant="20" id="J66-w4-pzt"/>
+                            <constraint firstItem="fEV-4Y-TnC" firstAttribute="leading" secondItem="p0C-T7-Jq5" secondAttribute="leading" constant="20" id="Jvg-h8-eQt"/>
                             <constraint firstItem="WXs-x6-CL8" firstAttribute="trailing" secondItem="p0C-T7-Jq5" secondAttribute="trailing" id="KKx-5r-qMS"/>
                             <constraint firstItem="idN-9n-xIy" firstAttribute="centerX" secondItem="jbQ-1d-Y73" secondAttribute="centerX" id="QQc-4v-dpF"/>
                             <constraint firstItem="idN-9n-xIy" firstAttribute="top" secondItem="p0C-T7-Jq5" secondAttribute="top" constant="10" id="SoB-fi-2Oy"/>
@@ -423,6 +439,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
         <image name="rectangle.and.text.magnifyingglass.rtl" catalog="system" width="128" height="89"/>
         <systemColor name="labelColor">
