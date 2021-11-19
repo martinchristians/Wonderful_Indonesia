@@ -16,6 +16,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var contentInfoButton: UIButton!
     @IBOutlet weak var introScreen: UIView!
+    @IBOutlet weak var imageScreen: UIImageView!
     
     private var currentCase: String = ""
     private var currentAngleY: Float = 0.0
@@ -33,6 +34,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         
         sceneView.alpha = 0.25
         label.alpha = 0
+        imageScreen.image = UIImage(named: "art.scnassets/images/scan image.png")!
         
         // set the view's delegate
         sceneView.delegate = self
@@ -66,7 +68,14 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
         
         if let hitTest = hitTestResults.first {
             let node = hitTest.node
-            print(node.name ?? "unknown")
+
+            DispatchQueue.main.async {
+                self.label.isHidden = false
+                self.label.text = node.name
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.label.isHidden = true
+            }
             
             switch currentCase {
             case "Proclamation Leaders":
@@ -104,7 +113,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
             let hitTestResults = sceneView.hitTest(touchCoordinates)
             
             if let hitTest = hitTestResults.first {
-                let node = hitTest.node
+                let node = hitTest.node.parent!
                 let pinchAction = SCNAction.scale(by: recognizer.scale, duration: 0)
                 node.runAction(pinchAction)
                 recognizer.scale = 1
@@ -164,118 +173,93 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         if let imageAnchor = anchor as? ARImageAnchor {
-            DispatchQueue.main.async {
-                self.label.isHidden = false
-                
-                if let name = imageAnchor.referenceImage.name {
-                    self.currentCase = name
-                    self.contentInfoButton.isHidden = false
-                    switch name {
-                    case "Tikus Temple":
-                        // replace label with object's name
-                        self.label.text = name
+            if let name = imageAnchor.referenceImage.name {
+                self.currentCase = name
+                self.contentInfoButton.isHidden = false
+                switch name {
+                case "Tikus Temple":
+                    // display 3D model
+                    guard let sceneTikusTemple = SCNScene(named: "art.scnassets/Tikus Temple.scn") else {return}
+                    guard let nodeTikusTemple = sceneTikusTemple.rootNode.childNode(withName: "Tikus Temple Parent", recursively: false) else {return}
+                    nodeTikusTemple.removeFromParentNode()
+                    node.addChildNode(nodeTikusTemple)
+                    nodeTikusTemple.isHidden = false
+                case "Map of Indonesia":
+                    // display image
+                    guard let sceneMap = SCNScene(named: "art.scnassets/map_indonesia.scn") else {return}
+                    guard let nodeMapContainer = sceneMap.rootNode.childNode(withName: "container", recursively: false) else {return}
+                    nodeMapContainer.removeFromParentNode()
+                    node.addChildNode(nodeMapContainer)
+                    nodeMapContainer.isHidden = false
+                case "Proclamation Leaders":
+                    // display container
+                    guard let sceneLeaders = SCNScene(named: "art.scnassets/proclamation_leaders.scn") else {return}
+                    guard let nodeLeadersContainer = sceneLeaders.rootNode.childNode(withName: "container", recursively: false) else {return}
+                    nodeLeadersContainer.removeFromParentNode()
+                    node.addChildNode(nodeLeadersContainer)
+                    nodeLeadersContainer.isHidden = false
+                    
+                    // display image
+                    guard let imageLeader = nodeLeadersContainer.childNode(withName: "panel", recursively: false) else {return}
+                    imageLeader.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/images/Ir. Sukarno.png")
+                    
+                    // display name text
+                    guard let nameLeader = nodeLeadersContainer.childNode(withName: "name", recursively: false) else {return}
+                    nameLeader.isHidden = false
+                case "Indonesian Ancestors":
+                    // display container
+                    guard let sceneVideo = SCNScene(named: "art.scnassets/video.scn") else {return}
+                    guard let nodeVideoContainer = sceneVideo.rootNode.childNode(withName: "container", recursively: false) else {return}
+                    nodeVideoContainer.removeFromParentNode()
+                    node.addChildNode(nodeVideoContainer)
+                    nodeVideoContainer.isHidden = false
+                    
+                    // display video
+                    let videoURL = Bundle.main.url(forResource: "art.scnassets/video indonesian ancestors", withExtension: "mov")
+                    self.videoPlayer = AVPlayer(url: videoURL!)
+                    
+                    let spriteKitScene = SKScene(size: CGSize(width: 640.0, height: 480.0))
+                    
+                    let nodeVideo = SKVideoNode(avPlayer: self.videoPlayer)
+                    nodeVideo.position = CGPoint(x: spriteKitScene.size.width/2, y: spriteKitScene.size.height/2)
+                    nodeVideo.size = spriteKitScene.size
+                    nodeVideo.yScale = -1
+                    nodeVideo.pause()
+                    
+                    spriteKitScene.addChild(nodeVideo)
+                    
+                    guard let video = nodeVideoContainer.childNode(withName: "panel", recursively: false) else {return}
+                    video.geometry?.firstMaterial?.diffuse.contents = spriteKitScene
+                case "Proclamation":
+                    // display container
+                    guard let sceneAudio = SCNScene(named: "art.scnassets/audio.scn") else {return}
+                    guard let nodeAudioContainer = sceneAudio.rootNode.childNode(withName: "container", recursively: false) else {return}
+                    nodeAudioContainer.removeFromParentNode()
+                    node.addChildNode(nodeAudioContainer)
+                    nodeAudioContainer.isHidden = false
+                    
+                    // display icon
+                    guard let imageIcon = nodeAudioContainer.childNode(withName: "panel", recursively: false) else {return}
+                    imageIcon.geometry?.firstMaterial?.diffuse.contents = self.iconPlay
+                    
+                    // play audio
+                    let audioURL = Bundle.main.path(forResource: "art.scnassets/audio proclamation", ofType: "mp3")
+                    do {
+                        try AVAudioSession.sharedInstance().setMode(.default)
+                        try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
                         
-                        // display 3D model
-                        guard let sceneTikusTemple = SCNScene(named: "art.scnassets/Tikus Temple.scn") else {return}
-                        guard let nodeTikusTemple = sceneTikusTemple.rootNode.childNode(withName: "Tikus Temple Parent", recursively: false) else {return}
-                        nodeTikusTemple.removeFromParentNode()
-                        node.addChildNode(nodeTikusTemple)
-                        nodeTikusTemple.isHidden = false
-                    case "Map of Indonesia":
-                        // replace label with object's name
-                        self.label.text = name
+                        guard let audioURL = audioURL else {return}
                         
-                        // display image
-                        guard let sceneMap = SCNScene(named: "art.scnassets/map_indonesia.scn") else {return}
-                        guard let nodeMapContainer = sceneMap.rootNode.childNode(withName: "container", recursively: false) else {return}
-                        nodeMapContainer.removeFromParentNode()
-                        node.addChildNode(nodeMapContainer)
-                        nodeMapContainer.isHidden = false
-                    case "Proclamation Leaders":
-                        // replace label with object's name
-                        self.label.text = name
+                        self.audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioURL))
                         
-                        // display container
-                        guard let sceneLeaders = SCNScene(named: "art.scnassets/proclamation_leaders.scn") else {return}
-                        guard let nodeLeadersContainer = sceneLeaders.rootNode.childNode(withName: "container", recursively: false) else {return}
-                        nodeLeadersContainer.removeFromParentNode()
-                        node.addChildNode(nodeLeadersContainer)
-                        nodeLeadersContainer.isHidden = false
+                        guard let audioPlayer = self.audioPlayer else {return}
                         
-                        // display image
-                        guard let imageLeader = nodeLeadersContainer.childNode(withName: "panel", recursively: false) else {return}
-                        imageLeader.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/images/Ir. Sukarno.png")
-                        
-                        // display name text
-                        /*
-                        guard let nameLeader = nodeLeadersContainer.childNode(withName: "name", recursively: false) else {return}
-                        nameLeader.isHidden = false
-                        */
-                    case "Indonesian Ancestors":
-                        // replace label with object's name
-                        self.label.text = name
-                        
-                        // display container
-                        guard let sceneVideo = SCNScene(named: "art.scnassets/video.scn") else {return}
-                        guard let nodeVideoContainer = sceneVideo.rootNode.childNode(withName: "container", recursively: false) else {return}
-                        nodeVideoContainer.removeFromParentNode()
-                        node.addChildNode(nodeVideoContainer)
-                        nodeVideoContainer.isHidden = false
-                        
-                        // display video
-                        let videoURL = Bundle.main.url(forResource: "art.scnassets/video indonesian ancestors", withExtension: "mov")
-                        self.videoPlayer = AVPlayer(url: videoURL!)
-                        
-                        let spriteKitScene = SKScene(size: CGSize(width: 640.0, height: 480.0))
-                        
-                        let nodeVideo = SKVideoNode(avPlayer: self.videoPlayer)
-                        nodeVideo.position = CGPoint(x: spriteKitScene.size.width/2, y: spriteKitScene.size.height/2)
-                        nodeVideo.size = spriteKitScene.size
-                        nodeVideo.yScale = -1
-                        nodeVideo.pause()
-                        
-                        spriteKitScene.addChild(nodeVideo)
-                        
-                        guard let video = nodeVideoContainer.childNode(withName: "panel", recursively: false) else {return}
-                        video.geometry?.firstMaterial?.diffuse.contents = spriteKitScene
-                    case "Proclamation":
-                        // replace label with object's name
-                        self.label.text = name
-                        
-                        // display container
-                        guard let sceneAudio = SCNScene(named: "art.scnassets/audio.scn") else {return}
-                        guard let nodeAudioContainer = sceneAudio.rootNode.childNode(withName: "container", recursively: false) else {return}
-                        nodeAudioContainer.removeFromParentNode()
-                        node.addChildNode(nodeAudioContainer)
-                        nodeAudioContainer.isHidden = false
-                        
-                        // display icon
-                        guard let imageIcon = nodeAudioContainer.childNode(withName: "panel", recursively: false) else {return}
-                        imageIcon.geometry?.firstMaterial?.diffuse.contents = self.iconPlay
-                        
-                        // play audio
-                        let audioURL = Bundle.main.path(forResource: "art.scnassets/audio proclamation", ofType: "mp3")
-                        do {
-                            try AVAudioSession.sharedInstance().setMode(.default)
-                            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
-                            
-                            guard let audioURL = audioURL else {return}
-                            
-                            self.audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioURL))
-                            
-                            guard let audioPlayer = self.audioPlayer else {return}
-                            
-                            audioPlayer.stop()
-                        } catch {
-                            print(error)
-                        }
-                    default:
-                        self.label.text = name
+                        audioPlayer.stop()
+                    } catch {
+                        print(error)
                     }
-                }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    self.label.isHidden = true
+                default:
+                    self.label.text = name
                 }
             }
         } else {
