@@ -28,6 +28,8 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     private var iconPlay = UIImage(named: "art.scnassets/images/play.png")
     private var iconWave = UIImage(named: "art.scnassets/images/wave.png")
     
+    private let configuration = ARImageTrackingConfiguration()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AR BOOK"
@@ -271,8 +273,6 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let configuration = ARImageTrackingConfiguration()
-        
         guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {fatalError("Missing expected asset catalog resources!")}
         
         configuration.trackingImages = referenceImages
@@ -293,19 +293,18 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @IBAction func clickRefresh(_ sender: Any) {
+        sceneView.session.pause()
         sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
             node.removeFromParentNode()
+        }
+        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        
+        DispatchQueue.main.async {
+            self.label.isHidden = false
+            self.label.text = "Refreshed"
             
-            guard let anchor = sceneView.anchor(for: node) else {return}
-            sceneView.session.remove(anchor: anchor)
-            
-            DispatchQueue.main.async {
-                self.label.isHidden = false
-                self.label.text = "Refreshed"
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.label.isHidden = true
-                }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.label.isHidden = true
             }
         }
     }
