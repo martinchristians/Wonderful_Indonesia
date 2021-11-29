@@ -52,6 +52,15 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         self.contentCollectionView.delegate = self
         
         self.registerGestureRecognizers()
+        
+        DispatchQueue.main.async {
+            self.label.isHidden = false
+            self.label.text = "Tap object to delete it"
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            self.label.isHidden = true
+        }
     }
     
     func registerGestureRecognizers() {
@@ -151,6 +160,7 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         }
     }
     
+    // Collection Data Source
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return contentsArray.count
     }
@@ -161,10 +171,16 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
         return cell
     }
     
+    // Collection Delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.cell = collectionView.cellForItem(at: indexPath)
         self.contentSelected = contentsArray[indexPath.row]
         self.cell?.backgroundColor = UIColor.systemYellow
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        self.cell = collectionView.cellForItem(at: indexPath)
+        self.cell?.backgroundColor = UIColor.systemGreen
     }
     
     func addContent() -> SCNNode {
@@ -181,7 +197,9 @@ class ARRoomViewController: UIViewController, ARSCNViewDelegate, UICollectionVie
             } else if (node.name == "Tikus Temple Parent") {
                 node.scale = SCNVector3Make(0.003, 0.003, 0.003)
             } else if (node.name == "Room Portal Parent") {
-                deleteRoomButton.isHidden = false
+                DispatchQueue.main.async {
+                    self.deleteRoomButton.isHidden = false
+                }
                 
                 // change rendering order
                 self.changeRenderingOrder(nodeName: "box cetho", node: node)

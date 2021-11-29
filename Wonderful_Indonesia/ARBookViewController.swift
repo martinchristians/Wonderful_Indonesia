@@ -83,10 +83,9 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                     audioPlayer?.play()
                 }
             case "Indonesian Ancestors":
-                var videoRate: Float = 0.0
-                if (self.videoPlayer.rate-videoRate) == 0.0 {
+                let stopVideo: Float = 0.0
+                if self.videoPlayer.rate == stopVideo {
                     self.videoPlayer.play()
-                    videoRate = self.videoPlayer.rate
                 } else {
                     self.videoPlayer.pause()
                 }
@@ -171,11 +170,12 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                 self.label.isHidden = false
                 
                 if let name = imageAnchor.referenceImage.name {
-                    self.label.text = name
                     self.currentCase = name
                     self.contentInfoButton.isHidden = false
                     switch name {
                     case "Tikus Temple":
+                        self.label.text = "pinch, rotate, or press it"
+                        
                         // display 3D model
                         guard let sceneTikusTemple = SCNScene(named: "art.scnassets/Tikus Temple.scn") else {return}
                         guard let nodeTikusTemple = sceneTikusTemple.rootNode.childNode(withName: "Tikus Temple Parent", recursively: false) else {return}
@@ -183,6 +183,8 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         node.addChildNode(nodeTikusTemple)
                         nodeTikusTemple.isHidden = false
                     case "Map of Indonesia":
+                        self.label.text = "happy learning!"
+                        
                         // display image
                         guard let sceneMap = SCNScene(named: "art.scnassets/map_indonesia.scn") else {return}
                         guard let nodeMapContainer = sceneMap.rootNode.childNode(withName: "container", recursively: false) else {return}
@@ -190,6 +192,8 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         node.addChildNode(nodeMapContainer)
                         nodeMapContainer.isHidden = false
                     case "Proclamation Leaders":
+                        self.label.text = "tap to change it"
+                        
                         // display container
                         guard let sceneLeaders = SCNScene(named: "art.scnassets/proclamation_leaders.scn") else {return}
                         guard let nodeLeadersContainer = sceneLeaders.rootNode.childNode(withName: "container", recursively: false) else {return}
@@ -201,10 +205,12 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         guard let imageLeader = nodeLeadersContainer.childNode(withName: "panel", recursively: false) else {return}
                         imageLeader.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/images/Ir. Sukarno.png")
                         
-                        // display name text
-                        guard let nameLeader = nodeLeadersContainer.childNode(withName: "name", recursively: false) else {return}
-                        nameLeader.isHidden = false
+//                        // display name text
+//                        guard let nameLeader = nodeLeadersContainer.childNode(withName: "name", recursively: false) else {return}
+//                        nameLeader.isHidden = false
                     case "Indonesian Ancestors":
+                        self.label.text = "tap to pause"
+                        
                         // display container
                         guard let sceneVideo = SCNScene(named: "art.scnassets/video.scn") else {return}
                         guard let nodeVideoContainer = sceneVideo.rootNode.childNode(withName: "container", recursively: false) else {return}
@@ -229,6 +235,8 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         guard let video = nodeVideoContainer.childNode(withName: "panel", recursively: false) else {return}
                         video.geometry?.firstMaterial?.diffuse.contents = spriteKitScene
                     case "Proclamation":
+                        self.label.text = "tap to pause"
+                        
                         // display container
                         guard let sceneAudio = SCNScene(named: "art.scnassets/audio.scn") else {return}
                         guard let nodeAudioContainer = sceneAudio.rootNode.childNode(withName: "container", recursively: false) else {return}
@@ -243,15 +251,13 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         // play audio
                         let audioURL = Bundle.main.path(forResource: "art.scnassets/audio proclamation", ofType: "mp3")
                         do {
-                            try AVAudioSession.sharedInstance().setMode(.default)
-                            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+//                            try AVAudioSession.sharedInstance().setMode(.default)
+//                            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
                             
                             guard let audioURL = audioURL else {return}
-                            
                             self.audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioURL))
                             
                             guard let audioPlayer = self.audioPlayer else {return}
-                            
                             audioPlayer.stop()
                         } catch {
                             print(error)
@@ -260,7 +266,7 @@ class ARBookViewController: UIViewController, ARSCNViewDelegate {
                         self.label.text = name
                     }
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.label.isHidden = true
                 }
             }
